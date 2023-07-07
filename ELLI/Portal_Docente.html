@@ -1,0 +1,60 @@
+<!--Vista inicial Docente-->
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <link rel="stylesheet" href="./css/stylePortal.css" />
+   <script
+        src="https://kit.fontawesome.com/c0959f9251.js" 
+        crossorigin="anonymous">
+   </script>
+  <title>Panel Docente | ISET Educativo</title>
+</head>
+<body>
+
+<!--Panel lateral con opciones-->
+        <div class="container">
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><i class="fa-solid fa-user-tie"></i></span>
+                            <span class="title"><?php echo $_SESSION["u_nombre"] . ", " . $_SESSION["u_apellido"] ;?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ExamenFinal.html">
+                            <span class="icon"><i class="fa-regular fa-note-sticky"></i></span>
+                            <span class="title">Notas de Examen Final</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ExamenParcial.html">
+                            <span class="icon"><i class="fa-solid fa-receipt"></i></span>
+                            <span class="title">Notas de Parcial</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="index.html">
+                            <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                            <span class="title">Cerrar</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--Menu-->
+
+            <div class="main">
+                <div class="topbar">
+                    <div class="toggle"><i class="fa-solid fa-bars"></i></div>
+                </div>
+     
+        </div>
+      </section>
+  </main>
+  <script src="js/app.js"></script>  
+</body>
+</html>
