@@ -1,0 +1,180 @@
+<!--Vista notas examen Administracion-->
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <link rel="shortcut icon" href="https://iset-tuc.infd.edu.ar/aula/static/14.05.00-45/skins/redinfod/img/comunes/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/stylePortal.css" />
+   <script
+        src="https://kit.fontawesome.com/c0959f9251.js" 
+        crossorigin="anonymous">
+   </script>
+  <title>Portal Adminitracion| ISET Educativo</title>
+</head>
+<body>
+
+<!--Panel lateral con opciones-->
+        <div class="container">
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><i class="fa-solid fa-user-tie"></i></span>
+                            <span class="title">Administracion</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="carga_docente.html">
+                            <span class="icon"><i class="fa-solid fa-person-chalkboard"></i></span>
+                            <span class="title">Registrar Docente</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="carga_alumnos.html">
+                            <span class="icon"><i class="fa-solid fa-file-circle-plus"></i></span>
+                            <span class="title">Registrar Alumno</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="carga_coordinador.html">
+                            <span class="icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+                            <span class="title">Registrar Coordinador</span>
+                        </a>
+                    </li>
+                     <li class="hovered">
+                        <a href="verNotasExamen.html">
+                            <span class="icon"><i class="fa-regular fa-note-sticky"></i></span>
+                            <span class="title">Ver Notas Examenes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="verNotasCursado.html">
+                            <span class="icon"><i class="fa-solid fa-receipt"></i></span>
+                            <span class="title"> Ver Notas Cursado</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="nuevaClase.html">
+                            <span class="icon"><i class="fa-solid fa-folder-plus"></i></span>
+                            <span class="title"> Crear Aula</span>
+                        </a>
+                    </li>  
+                    <li>
+                        <a href="index.html">
+                            <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                            <span class="title">Cerrar</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--Menu-->
+
+            <div class="main">
+                <div class="topbar">
+                    <div class="toggle"><i class="fa-solid fa-bars"></i></div>
+                </div>
+                <!--Tarjetas-->
+            <div class= "cardBox">
+                <div class="card">
+                    <div>
+                        <div class="cardName">
+                           <div class="iconBx"> <i class="fa-regular fa-calendar-check"></i></div>
+                            <form action="#">
+                                <h5>Fecha:</h5>
+                                <input type="date">
+                            </form>  
+                        </div>
+                        
+                    </div>
+                </div>
+                  <div class="card">
+                    <div>
+                        <div class="cardName">
+                            <div class="iconBx"><i class="fa-regular fa-folder-open"></i></div>
+                           <form action="#">
+                                <h5>Mesa:</h5>
+                                <input type="number">
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div>
+                        <div class="cardName">
+                            <div class="iconBx"><i class="fa-solid fa-file-circle-question"></i></div>
+                          <label for="Nombres-Materias">Materia:</label>
+                            <select name="Nombres-Materias" id="Nombres-Materias">
+                                <option value="#"></option>
+                                <option value="ciu">Ciudadanía y Espacio Público</option>
+                                <option value="intr-inf">Introducción a la informática</option>
+                                <option value="intr-redes">Introducción a Redes</option>
+                                <option value="bd">Bases de datos I</option>
+                                <option value="mat">Matemática I</option>
+                                <option value="progr">Programación I</option>
+                                <option value="ing">Inglés Técnico I</option>
+                                <option value="algor">Estructura de datos y algoritmos</option>
+                                <option value="tall">Taller de Programación I</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!--Contenido-->
+                    <div class="details">
+                        <div class="Alumnos">
+                            <div class="cardHeader">
+                                <h2>Registro de Examen Final</h2>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Alumno</td>
+                                        <td>Nota</td>
+                                        <td>Condicion</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" placeholder="Nombre,Apellido.">
+                                        </td>
+                                        <td>
+                                            <select name="Notas" id="Notas">
+                                                <option value="#"></option>
+                                                <option value="uno">1</option>
+                                                <option value="dos">2</option>
+                                                <option value="tres">3</option>
+                                                <option value="cuatro">4</option>
+                                                <option value="cinco">5</option>
+                                                <option value="seis">6</option>
+                                                <option value="siete">7</option>
+                                                <option value="ocho">8</option>
+                                                <option value="nueve">9</option>
+                                                <option value="diez">10</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="Condicion" id="Condicion">
+                                                <option value="#"></option>
+                                                <option value="apro">Aprobado</option>
+                                                <option value="desp">Desaprobado</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="btn">
+                                    <button type="submit">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <script src="./js/appAlumno.js"></script> 
+    </body>
+</html>
