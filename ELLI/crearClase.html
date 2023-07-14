@@ -1,4 +1,3 @@
-<!--Vista notas cursadoAdministracion-->
 <!DOCTYPE html>
 
 <html lang="es">
@@ -43,7 +42,7 @@
                             <span class="title">Registrar Coordinador</span>
                         </a>
                     </li>
-                     <li>
+                     <li class="hovered">
                         <a href="crearClase.html">
                             <span class="icon"><i class="fa-solid fa-circle-plus"></i></span>
                             <span class="title"> Crear Aula</span>
@@ -55,7 +54,7 @@
                             <span class="title">Ver Notas Examenes</span>
                         </a>
                     </li>
-                    <li class="hovered">
+                    <li>
                         <a href="verNotasCursado.html">
                             <span class="icon"><i class="fa-solid fa-receipt"></i></span>
                             <span class="title"> Ver Notas Cursado</span>
@@ -78,11 +77,14 @@
                 <div class="card">
                     <div>
                         <div class="cardName">
-                           <div class="iconBx"> <i class="fa-regular fa-calendar-check"></i></div>
-                            <form action="#">
-                                <h5>Fecha:</h5>
-                                <input type="date">
-                            </form>  
+                           <div class="iconBx"><i class="fa-solid fa-person-chalkboard"></i></div>
+                          <label for="Nombres-Docentes">Docente:</label>
+                            <select name="Nombres-Docentes" id="Nombres-Docentes">
+                                <option value="#"></option>
+                                <option value="1">Barros</option>
+                                <option value="2">Figeroa</option>
+                                <option value="3">Nieva</option>
+                            </select>
                         </div>
                         
                     </div>
@@ -91,13 +93,12 @@
                     <div>
                         <div class="cardName">
                             <div class="iconBx"><i class="fa-solid fa-file-circle-question"></i></div>
-                          <label for="Nombres-Materias">Carrera:</label>
+                          <label for="Nombres-Materias">Materia:</label>
                             <select name="Nombres-Materias" id="Nombres-Materias">
                                 <option value="#"></option>
-                                <option value="TSDS">Tecnicatura Superior en Desarrollo de Software</option>
-                                <option value="TSGA">Tecnicatura Superior en Gestion Ambiental</option>
-                                <option value="TSAR">Tecnicatura Superior en Automatizacion y Robotica Indistrial</option>
-                                <option value="TSB">Tecnicatura Superior en Bioenergia</option>
+                                <option value="P3">Programacion III</option>
+                                <option value="GP">Gestion de Proyectos</option>
+                                <option value="TP3">Taller de Programacion III</option>
                             </select>
                         </div>
                         
@@ -106,43 +107,18 @@
             <div class="card">
                     <div>
                         <div class="cardName">
-                            <div class="iconBx"><i class="fa-solid fa-file-circle-question"></i></div>
-                          <label for="Nombres-Materias">Materia:</label>
-                           <input type="text" name="Materias">
+                            <div class="iconBx"><i class="fa-solid fa-graduation-cap"></i></div>
+                          <label for="Nombres-Alumnos">Alumnos:</label>
+                           <select name="Nombres-Alumnos" id="Nombres-Alumnos">
+                                <option value="#"></option>
+                                <option value="1">Carrazana David</option>
+                                <option value="2">Lafuente Lourdes</option>
+                                <option value="3">Lorente Ignacio</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-              <div class="details">
-                    <div class="Alumnos">
-                        <div class="cardHeader">
-                            <h2>Registro de Parcial</h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr id="tabla-personalizada">
-                                    <th>Alumno</th>
-                                    <th>1º Parcial</th>
-                                    <th>2º Parcial</th>
-                                    <th>1º Recuperacion</th>
-                                    <th>2º Recuperacion</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>Lista de alumnos</td>
-                                    <td>nota 1</td>
-                                    <td>nota 2</td>
-                                    <td>recuperacion 1</td>
-                                    <td>recuperacion 2</td>
-                                    <td>estado</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
         <script src="js/app.js"></script> 
     </body>
 </html>
