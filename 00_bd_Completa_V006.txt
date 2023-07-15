@@ -1,0 +1,360 @@
+CREATE DATABASE bd_escuela;
+
+CREATE TABLE `ROL`(
+     `ID_ROL` INT         NOT NULL AUTO_INCREMENT,
+     `ROL`    VARCHAR(30) NOT NULL,
+    
+     CONSTRAINT `PK_ID_ROL` PRIMARY KEY (`ID_ROL`)
+);
+
+CREATE TABLE `CARRERA`(
+     `ID_CARRERA` INT          NOT NULL,
+     `NOMBRE`     VARCHAR(100) NOT NULL,
+     `ABREVIADO` VARCHAR(5)    NOT NULL,
+    
+     CONSTRAINT `PK_ID_CARRERA` PRIMARY KEY(`ID_CARRERA`)
+);
+
+CREATE TABLE `MATERIA` (
+     `ID_MATERIA`  INT           NOT NULL,
+     `ID_CARRERA`  INT           NOT NULL,
+     `NOMBRE`      VARCHAR(70)   NOT NULL,
+     `ANIO`        INT           NOT NULL,
+     `DESCRIPCION` VARCHAR(3000) NOT NULL,
+
+     CONSTRAINT `PK_ID_MATERIA` PRIMARY KEY (`ID_MATERIA`),
+     CONSTRAINT `FK_ID_CARRERA` FOREIGN KEY (`ID_CARRERA`) REFERENCES `CARRERA`(`ID_CARRERA`)
+);
+
+CREATE TABLE `ADMINISTRATIVO`(
+    `LEGAJO_ADM`        VARCHAR(12) NOT NULL,
+    `DNI`               INT         NOT NULL UNIQUE,
+    `NOMBRE`            VARCHAR(30) NOT NULL,
+    `APELLIDO`          VARCHAR(30) NOT NULL,
+    `ROL_ADMINISTRATIVO` INT         NOT NULL,
+    `USUARIO`           VARCHAR(50) NOT NULL,
+    `CONTRASENIA`       VARCHAR(20) NOT NULL,
+    `DOMICILIO`         VARCHAR(50) NOT NULL,
+    `NRO_DOMICILIO`     INT             NULL,
+    `CELULAR`           INT             NULL,
+
+    CONSTRAINT `PK_LEGAJO_EMP`         PRIMARY KEY(`LEGAJO_ADM`),
+    CONSTRAINT `FK_ROL_ADMINISTRATIVO` FOREIGN KEY(`ROL_ADMINISTRATIVO`) REFERENCES `ROL`(`ID_ROL`)
+);
+
+CREATE TABLE `DOCENTE`(
+    `LEGAJO_DOC`    VARCHAR(12) NOT NULL,
+    `DNI`           INT         NOT NULL UNIQUE,
+    `NOMBRE`        VARCHAR(30) NOT NULL,
+    `APELLIDO`      VARCHAR(30) NOT NULL,
+    `ROL_DOCENTE`   INT         NOT NULL,
+    `USUARIO`       VARCHAR(50) NOT NULL,
+    `CONTRASENIA`   VARCHAR(20) NOT NULL,
+    `DOMICILIO`     VARCHAR(50) NOT NULL,
+    `NRO_DOMICILIO` INT             NULL,
+    `CELULAR`       INT             NULL,
+    `CARRERA`       INT         NOT NULL,
+    `RED_FACEBOOK`  VARCHAR(50)     NULL,
+    `RED_INSTAGRAM` VARCHAR(50)     NULL,
+    `RED_TWITTER`   VARCHAR(50)     NULL,
+
+    CONSTRAINT `PK_LEGAJO_EMP`  PRIMARY KEY(`LEGAJO_DOC`),
+    CONSTRAINT `FK_ROL_DOCENTE` FOREIGN KEY(`ROL_DOCENTE`) REFERENCES `ROL`(`ID_ROL`)
+);
+
+CREATE TABLE `ENSENIA`(
+    `ID_ENSENIA` INT         NOT NULL AUTO_INCREMENT,
+    `ID_DOCENTE` VARCHAR(12) NOT NULL,
+    `ID_MATERIA` INT         NOT NULL,
+    `DESDE`      DATETIME    NOT NULL,
+    `HASTA`      DATETIME        NULL,
+    `CICLO`      INT         NOT NULL,
+
+    CONSTRAINT `PK_ID_ENSENIA`         PRIMARY KEY (`ID_ENSENIA`),
+    CONSTRAINT `FK_ID_DOCENTE`         FOREIGN KEY (`ID_DOCENTE`) REFERENCES `DOCENTE`(`LEGAJO_DOC`),
+    CONSTRAINT `FK_ID_MATERIA_ENSENIA` FOREIGN KEY (`ID_MATERIA`) REFERENCES `MATERIA`(`ID_MATERIA`)
+);
+
+CREATE TABLE `ALUMNO`(
+     `LEGAJO_ALU`    VARCHAR(12)  NOT NULL,
+     `DNI`           INT          NOT NULL,
+     `NOMBRE`        VARCHAR(50)  NOT NULL,
+     `APELLIDO`      VARCHAR(50)  NOT NULL,
+     `ROL_ALUMNO`    INT          NOT NULL,
+     `USUARIO`       VARCHAR(50)  NOT NULL,
+     `CONTRASENIA`   VARCHAR(20)  NOT NULL,
+     `DOMICILIO`     VARCHAR(100) NOT NULL,
+     `CELULAR`       INT              NULL,
+     `NRO_DOMICILIO` INT              NULL,
+     `ANIO`          INT          NOT NULL,
+     `CARRERA`       INT          NOT NULL,
+     `RED_FACEBOOK`  VARCHAR(100)     NULL,
+     `RED_INSTAGRAM` VARCHAR(100)     NULL,
+     `RED_TWITTER`   VARCHAR(100)     NULL,
+
+     CONSTRAINT `PK_LEGAJO_ALU` PRIMARY KEY (`LEGAJO_ALU`),
+     CONSTRAINT `FK_CARRERA`    FOREIGN KEY (`CARRERA`)    REFERENCES `CARRERA`(`ID_CARRERA`),
+     CONSTRAINT `FK_ROL_ALUMNO` FOREIGN KEY (`ROL_ALUMNO`) REFERENCES `ROL`(`ID_ROL`)
+);
+
+CREATE TABLE `CURSA`(
+    `ID_CURSADO`  INT         NOT NULL AUTO_INCREMENT,
+    `ID_ALUMNO`   VARCHAR(12) NOT NULL,
+    `ID_MATERIA`  INT         NOT NULL,
+    `FECHA`       DATETIME    NOT NULL,
+    `CICLO`       INT         NOT NULL,
+    `1ER_PARCIAL` INT             NULL,
+    `2DO_PARCIAL` INT             NULL,
+    `FINAL`       INT             NULL,
+    `ESTADO`      VARCHAR(50)     NULL,
+
+    CONSTRAINT `PK_ID_CURSA`         PRIMARY KEY (`ID_CURSADO`),
+    CONSTRAINT `FK_ID_ALUMNO`        FOREIGN KEY (`ID_ALUMNO`)  REFERENCES `ALUMNO`(`LEGAJO_ALU`),
+    CONSTRAINT `FK_ID_MATERIA_CURSA` FOREIGN KEY (`ID_MATERIA`) REFERENCES `MATERIA`(`ID_MATERIA`)
+);
+
+-- Insert de tablas
+
+-- Insert Roles
+
+INSERT INTO `ROL` (`ID_ROL`, `ROL`)
+     VALUES (1, 'administración');
+
+INSERT INTO `ROL` (`ID_ROL`, `ROL`)
+     VALUES (2, 'docente');
+
+INSERT INTO `ROL` (`ID_ROL`, `ROL`)
+     VALUES (3, 'alumno');
+
+-- Insert Carreras
+
+INSERT INTO `CARRERA` (`ID_CARRERA`, `NOMBRE`, `ABREVIADO`)
+     VALUES (1, 'Tecnicatura Superior en Desarrollo de Software', 'TSDS');
+
+INSERT INTO `CARRERA` (`ID_CARRERA`, `NOMBRE`, `ABREVIADO`)
+     VALUES (2, 'Tecnicatura Superior en Bioenergía', 'TSB');
+
+INSERT INTO `CARRERA` (`ID_CARRERA`, `NOMBRE`, `ABREVIADO`)
+     VALUES (3, 'Tecnicatura Superior en Gestión Ambiental', 'TSGA');
+
+INSERT INTO `CARRERA` (`ID_CARRERA`, `NOMBRE`, `ABREVIADO`)
+     VALUES (4, 'Tecnicatura Superior en Automatización y Robótica Industrial', 'TSARI');
+
+-- Insert Materias
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (1, 1, 'Ciudadanía y Espacio Público', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (2, 1, 'Introducción a la informática', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (3, 1, 'Introducción a Redes', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (4, 1, 'Bases de datos I', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (5, 1, 'Matemática I', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (6, 1, 'Programación I', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (7, 1, 'Inglés Técnico I', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (8, 1, 'Estructura de datos y algoritmos', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (9, 1, 'Taller de Programación I', 1, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (10, 1, 'Programación II', 2, 'Desarrollo de algoritmos avanzados');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (11, 1, 'Estadística Aplicada', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (12, 1, 'Base de datos II', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (13, 1,'Matematicas II', 2, 'Materia dedicada al análisis de soluciones computacionales mediante las matematicas');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (14, 1, 'Sistemas de Información Empresarial', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (15, 1, 'Inglés Técnico II', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (16, 1, 'Redes y Seguridad Informática', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (17, 1, 'Análisis y Diseño de Sistemas', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (18, 1, 'Laboratorio de Programacion II', 2, 'Dedicada a la practica de las soluciones computacionales propuestas');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (19, 1, 'Taller de Programación II', 2, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (20, 1, 'Emprendimientos Tecnológicos', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (21, 1, 'Gestión de proyectos y Software de Calidad', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (22, 1, 'Programación III', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (23, 1, 'Inglés Técnico III', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (24, 1, 'Ética y Deontología Profesional', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (25, 1, 'Legislación de software', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (26, 1, 'Programación Avanzada', 3, 'Descripcion de la materia');
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `ID_CARRERA`, `NOMBRE`, `ANIO`, `DESCRIPCION`)
+     VALUES (27, 1, 'Taller de Programación III', 3, 'Descripcion de la materia');
+
+-- Insert Administrativos
+
+INSERT INTO `ADMINISTRATIVO` (`LEGAJO_ADM`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ADMINISTRATIVO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`)
+     VALUES ('TSDS-19-1-A', 1, 'Rosana', 'Salomon', 1, 'rsaolomon@iset.com.ar', 1, 'calle', 123, 38100001);
+
+INSERT INTO `ADMINISTRATIVO` (`LEGAJO_ADM`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ADMINISTRATIVO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`)
+     VALUES ('TSDS-19-2-A', 2, 'Paula', 'Vázquez', 1, 'pvazquez@iset.com.ar', 1, 'calle', 123, 38100001);
+
+INSERT INTO `ADMINISTRATIVO` (`LEGAJO_ADM`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ADMINISTRATIVO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`)
+     VALUES ('TSDS-19-3-A', 3, 'Celia', 'Valenzuela', 1, 'cvalenzuela@iset.com.ar', 1, 'calle', 123, 38100001);
+
+INSERT INTO `ADMINISTRATIVO` (`LEGAJO_ADM`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ADMINISTRATIVO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`)
+     VALUES ('TSDS-19-4-A', 4, 'Pablo', 'Zelaya', 1, 'pzelaya@iset.com.ar', 1, 'calle', 123, 38100001);
+
+-- Insert Docentes
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-1-D', 1, 'Oscar', 'Niemeyer', 2, 'oniemeyer@iset.com.ar', 0, 'calle', 123, 38100001, 1, 'https://www.facebook.com/usuario', 'https://www.instagram.com/usuario', 'https://www.instagram.com/usuario');
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-2-D', 2, 'María', 'Costilla', 2, 'mcostilla@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-3-D', 3, 'Buckminster', 'Fuller', 2, 'bfuller@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-4-D', 4, 'Santiago', 'Calatrava', 2, 'scalatrava@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-21-5-D', 5, 'Diego', 'Figueroa', 2, 'dfigueroa@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-6-D', 6, 'Jorge', 'Leiva', 2, 'jleiva@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+INSERT INTO `DOCENTE` (`LEGAJO_DOC`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_DOCENTE`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-7-D', 7, 'Viktor', 'Frankenstein', 2, 'vfrankenstein@iset.com.ar', 0, 'calle', 123, 38100001, 1, NULL, NULL, NULL);
+
+-- Insert Alumnos
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-1-A', 1, 'Lourdes', 'La Fuente', 3, 'llafuente@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, 'https://www.facebook.com/usuario', 'https://www.instagram.com/usuario', 'https://www.instagram.com/usuario');
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-2-A', 2, 'Ignacio', 'Llorente', 3, 'illorente@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-3-A', 3, 'Lucas', 'Villagran', 3, 'lvillagran@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-4-A', 4, 'David', 'Carrazana', 3, 'dcarrazana@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-5-A', 5, 'Ariel', 'Kasiañuk', 3, 'akasiañuk@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-6-A', 6, 'Carlos', 'Namen', 3, 'cnamen@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-7-A', 7, 'Ramon', 'Gutierrez', 3, 'rgutierrez@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-8-A', 8, 'Ricardo', 'Xxxx', 3, 'rxxxx@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+INSERT INTO `ALUMNO` (`LEGAJO_ALU`, `DNI`, `NOMBRE`, `APELLIDO`, `ROL_ALUMNO`, `USUARIO`, `CONTRASENIA`, `DOMICILIO`, `NRO_DOMICILIO`, `CELULAR`, `ANIO`, `CARRERA`, `RED_FACEBOOK`, `RED_INSTAGRAM`, `RED_TWITTER`)
+     VALUES ('TSDS-19-9-A', 9, 'Norma', ' Xxxx', 3, 'nxxxx@iset.com.ar', 0, 'calle', 123, 38100001, 2019, 1, NULL, NULL, NULL);
+
+--
+-- Volcado de datos para la tabla `notasalumno`
+--
+
+INSERT INTO `CURSA` (`ID_CURSADO`, `ID_MATERIA`, `ID_ALUMNO`, `FECHA`, `CICLO`, `1ER_PARCIAL`, `2DO_PARCIAL`, `FINAL`, `ESTADO`) VALUES
+(1, 1, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 7, 7, 7, 'Promocion'),
+(2, 2, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 7, 9, 8, 'Promocion'),
+(3, 3, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 4, 4, 6, 'Aprobado'),
+(4, 4, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 8, 8, 8, 'Promocion'),
+(5, 5, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 10, 5, 10, 'Aprobado'),
+(6, 6, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 9, 10, 10, 'Promocion'),
+(7, 7, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 8, 8, 9, 'Aprobado'),
+(8, 8, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 8, 8, 9, 'Aprobado'),
+(9, 9, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 8, 7, 8, 'Aprobado'),
+(10, 10, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, 10, 10, 10, 'Aprobado'),
+(11, 11, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(12, 12, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(13, 13, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(14, 14, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(15, 15, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(16, 16, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(17, 17, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(18, 18, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(19, 19, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(20, 20, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(21, 21, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(22, 22, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(23, 23, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(24, 24, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(25, 25, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(26, 26, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos'),
+(27, 27, 'TSDS-19-1-A', CURRENT_TIMESTAMP, 2023, NULL, NULL, NULL, 'Sin Datos');
+
+-- CREACION DE VISTAS
+
+-- VISTA nota_alumno
+
+CREATE OR REPLACE VIEW vw_nota_alumno AS
+SELECT m.id_materia Materia,
+          m.nombre nombre,
+          m.anio anio,
+          c.final nota,
+          c.estado condicion,
+          a.legajo_alu legajo
+     FROM `cursa` c
+     JOIN alumno a ON c.id_alumno = a.legajo_alu
+     JOIN materia m ON c.id_materia = m.id_materia;
+
+-- VISTA plan_estudio
+
+CREATE OR REPLACE VIEW vw_plan_estudio AS
+SELECT c.nombre carrera,
+	  c.id_carrera,
+       m.id_materia,
+       m.nombre,
+       m.anio
+  FROM carrera c
+  JOIN materia m ON m.id_carrera = c.id_carrera;
+
+  -- VISTA cursado
+
+CREATE OR REPLACE VIEW vw_cursado AS
+SELECT a.legajo_alu, 
+     CONCAT( a.nombre, ' ', a.apellido) AS alumno,
+     c.ciclo AS anio,
+     c.id_materia AS materia
+FROM cursa c 
+JOIN alumno a ON a.legajo_alu = c.id_alumno;
+
